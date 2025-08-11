@@ -6,25 +6,66 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css"> -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <!-- MDUI CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css" />
+  <!-- Docsify with MDUI theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <style>
+    /* 自定义样式以适配MDUI */
+    .sidebar {
+      background-color: #f5f5f5 !important;
+    }
+    .content {
+      padding-top: 64px !important;
+    }
+    .markdown-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 15px;
+    }
+    body {
+      background-color: #fafafa;
+    }
+  </style>
 </head>
 <body>
+  <!-- MDUI App Bar -->
+  <div class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-indigo">
+      <a href="javascript:;" class="mdui-typo-title">Haxe 4 中文手册</a>
+      <div class="mdui-toolbar-spacer"></div>
+      <a href="https://github.com/NulllStack/HaxeManualCN" target="_blank" class="mdui-btn mdui-btn-icon">
+        <i class="mdui-icon material-icons">code</i>
+      </a>
+    </div>
+  </div>
+  
   <div id="app"></div>
   <script>
     window.$docsify = {
       coverpage: true,
       auto2top: true,
-      loadSidebar:true,
+      loadSidebar: true,
       subMaxLevel: 1,
       name: 'Haxe 4 中文手册',
-      repo: 'https://github.com/NulllStack/HaxeManualCN'
+      repo: 'https://github.com/NulllStack/HaxeManualCN',
+      themeColor: '#3f51b5'
     }
   </script>
+  <!-- MDUI JS -->
+  <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+  <!-- Docsify JS -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-haxe.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-cpp.min.js"></script>
+  
+  <script>
+    // 初始化MDUI组件
+    document.addEventListener('DOMContentLoaded', function() {
+      // 可以在这里添加更多的MDUI初始化代码
+    });
+  </script>
 </body>
 </html>
