@@ -1,489 +1,64 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Haxe 4 中文手册</title>
+  <title>Document</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Haxe 4 编程语言中文手册">
+  <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  
   <!-- MDUI CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css" />
-  <!-- Docsify theme -->
+  <!-- Docsify with MDUI theme -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-  
   <style>
-    /* 全局动画和过渡效果 */
-    * {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-      background-color: #f5f5f5 !important;
-      opacity: 0;
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-    
-    /* 页面加载动画 */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* 侧边栏动画 */
+    /* 自定义样式以适配MDUI */
     .sidebar {
       background-color: #f5f5f5 !important;
-      transform: translateX(-100%);
-      animation: slideInLeft 0.6s ease-out 0.2s forwards;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
     }
-    
-    @keyframes slideInLeft {
-      from {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-    
-    /* 侧边栏链接悬停效果 */
-    .sidebar ul li a {
-      position: relative;
-      padding-left: 15px !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    .sidebar ul li a::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 0;
-      background-color: #3f51b5;
-      transition: height 0.3s ease;
-    }
-    
-    .sidebar ul li a:hover::before {
-      height: 80%;
-    }
-    
-    .sidebar ul li a:hover {
-      color: #3f51b5 !important;
-      background-color: rgba(63, 81, 181, 0.1) !important;
-      padding-left: 20px !important;
-    }
-    
-    .sidebar ul li.active > a {
-      color: #3f51b5 !important;
-      font-weight: 600 !important;
-    }
-    
-    .sidebar ul li.active > a::before {
-      height: 80%;
-    }
-    
-    /* 内容区域动画 */
     .content {
       padding-top: 64px !important;
-      opacity: 0;
-      animation: contentFadeIn 0.8s ease-out 0.4s forwards;
     }
-    
-    @keyframes contentFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* Markdown内容卡片动画 */
     .markdown-section {
       max-width: 1200px;
       margin: 0 auto;
       padding: 30px 15px;
+    }
+    body {
+      background-color: #fafafa;
+    }
+    /* 搜索框样式 */
+    .search {
+      margin: 0 15px;
+    }
+    .search input {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      width: 200px;
+    }
+    .search input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .search-results {
       background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: cardSlideUp 0.6s ease-out forwards;
-      transition: all 0.3s ease !important;
-    }
-    
-    .markdown-section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-    
-    @keyframes cardSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* 为多个卡片添加延迟动画 */
-    .markdown-section:nth-child(1) { animation-delay: 0.1s; }
-    .markdown-section:nth-child(2) { animation-delay: 0.2s; }
-    .markdown-section:nth-child(3) { animation-delay: 0.3s; }
-    .markdown-section:nth-child(4) { animation-delay: 0.4s; }
-    
-    /* 标题动画 */
-    h1, h2, h3, h4, h5, h6 {
-      color: #333 !important;
-      position: relative;
-      opacity: 0;
-      animation: titleFadeIn 0.6s ease-out forwards;
-    }
-    
-    h1 {
-      border-bottom: 2px solid #3f51b5 !important;
-      padding-bottom: 15px !important;
-      margin-bottom: 25px !important;
-      animation-delay: 0.2s;
-    }
-    
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #3f51b5, #7986cb);
-      animation: borderExpand 1s ease-out 0.8s forwards;
-    }
-    
-    @keyframes borderExpand {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    
-    h2 {
-      margin-top: 35px !important;
-      margin-bottom: 20px !important;
-      animation-delay: 0.3s;
-    }
-    
-    h3 {
-      animation-delay: 0.4s;
-    }
-    
-    @keyframes titleFadeIn {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    /* 段落淡入动画 */
-    p {
-      opacity: 0;
-      animation: paragraphFadeIn 0.8s ease-out forwards;
-      line-height: 1.8;
-    }
-    
-    p:nth-of-type(1) { animation-delay: 0.5s; }
-    p:nth-of-type(2) { animation-delay: 0.6s; }
-    p:nth-of-type(3) { animation-delay: 0.7s; }
-    p:nth-of-type(4) { animation-delay: 0.8s; }
-    p:nth-of-type(5) { animation-delay: 0.9s; }
-    p:nth-of-type(6) { animation-delay: 1.0s; }
-    
-    @keyframes paragraphFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* 代码块动画 */
-    pre {
-      background-color: #282c34 !important;
-      border-radius: 8px !important;
-      padding: 20px !important;
-      margin: 20px 0 !important;
-      opacity: 0;
-      transform: scale(0.95);
-      animation: codeBlockAppear 0.6s ease-out forwards;
-      overflow-x: auto !important;
-      box-shadow: 0 4px 15px rgba(40, 44, 52, 0.3) !important;
-    }
-    
-    pre:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 25px rgba(40, 44, 52, 0.4) !important;
-    }
-    
-    @keyframes codeBlockAppear {
-      from {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-    
-    code {
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
-      background-color: rgba(63, 81, 181, 0.1) !important;
-      padding: 3px 8px !important;
-      border-radius: 4px !important;
-      font-size: 0.9em !important;
-      transition: all 0.2s ease !important;
-    }
-    
-    code:hover {
-      background-color: rgba(63, 81, 181, 0.2) !important;
-      transform: translateY(-1px);
-    }
-    
-    /* 链接动画 */
-    a {
-      color: #3f51b5 !important;
-      text-decoration: none !important;
-      position: relative;
-      transition: all 0.3s ease !important;
-    }
-    
-    a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: #3f51b5;
-      transition: width 0.3s ease;
-    }
-    
-    a:hover {
-      color: #303f9f !important;
-    }
-    
-    a:hover::after {
-      width: 100%;
-    }
-    
-    /* 列表动画 */
-    li {
-      margin-bottom: 12px !important;
-      opacity: 0;
-      transform: translateX(-20px);
-      animation: listItemSlideIn 0.5s ease-out forwards;
-    }
-    
-    li:nth-child(1) { animation-delay: 0.1s; }
-    li:nth-child(2) { animation-delay: 0.2s; }
-    li:nth-child(3) { animation-delay: 0.3s; }
-    li:nth-child(4) { animation-delay: 0.4s; }
-    li:nth-child(5) { animation-delay: 0.5s; }
-    li:nth-child(6) { animation-delay: 0.6s; }
-    
-    @keyframes listItemSlideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    /* 表格动画 */
-    table {
-      border-collapse: collapse !important;
-      width: 100% !important;
-      margin: 20px 0 !important;
-      opacity: 0;
-      animation: tableFadeIn 0.8s ease-out forwards;
-      border-radius: 8px !important;
-      overflow: hidden !important;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-    }
-    
-    @keyframes tableFadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    
-    th, td {
-      border: 1px solid #e0e0e0 !important;
-      padding: 12px 15px !important;
-      text-align: left !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    th {
-      background-color: #3f51b5 !important;
-      color: white !important;
-      font-weight: 600 !important;
-    }
-    
-    tr:hover td {
-      background-color: rgba(63, 81, 181, 0.05) !important;
-    }
-    
-    /* 引用块动画 */
-    blockquote {
-      border-left: 4px solid #3f51b5 !important;
-      padding: 20px !important;
-      background-color: rgba(63, 81, 181, 0.05) !important;
-      margin: 20px 0 !important;
-      border-radius: 0 8px 8px 0 !important;
-      opacity: 0;
-      transform: translateX(-20px);
-      animation: quoteSlideIn 0.6s ease-out forwards;
-    }
-    
-    @keyframes quoteSlideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    /* MDUI App Bar 动画 */
-    .mdui-appbar {
-      transform: translateY(-100%);
-      animation: appBarSlideDown 0.6s ease-out forwards;
-    }
-    
-    @keyframes appBarSlideDown {
-      from {
-        transform: translateY(-100%);
-      }
-      to {
-        transform: translateY(0);
-      }
-    }
-    
-    /* 按钮悬停效果 */
-    .mdui-btn {
-      transition: all 0.3s ease !important;
-    }
-    
-    .mdui-btn:hover {
-      transform: scale(1.1) rotate(5deg);
-    }
-    
-    /* 移动端适配 */
-    @media (max-width: 768px) {
-      .markdown-section {
-        padding: 20px !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
-      }
-      
-      .content {
-        padding-top: 56px !important;
-      }
-      
-      /* 移动端减少动画复杂度 */
-      * {
-        transition: all 0.2s ease !important;
-      }
-    }
-    
-    /* 加载动画 */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #3f51b5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      animation: loadingFadeOut 1s ease-out 0.5s forwards;
-    }
-    
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top: 3px solid white;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    @keyframes loadingFadeOut {
-      0% {
-        opacity: 1;
-        visibility: visible;
-      }
-      70% {
-        opacity: 1;
-        visibility: visible;
-      }
-      100% {
-        opacity: 0;
-        visibility: hidden;
-      }
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <!-- 加载动画 -->
-  <div class="loading-overlay">
-    <div class="loading-spinner"></div>
-  </div>
-  
   <!-- MDUI App Bar -->
   <div class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-indigo">
       <a href="javascript:;" class="mdui-typo-title">Haxe 4 中文手册</a>
       <div class="mdui-toolbar-spacer"></div>
-      <a href="https://ajwyunsx.github.io/HaxeManualCN" target="_blank" class="mdui-btn mdui-btn-icon">
+      <!-- 搜索框 -->
+      <div class="search">
+        <input type="text" placeholder="搜索文档..." id="search-input">
+      </div>
+      <a href="https://github.com/NulllStack/HaxeManualCN" target="_blank" class="mdui-btn mdui-btn-icon">
         <i class="mdui-icon material-icons">code</i>
       </a>
     </div>
@@ -497,75 +72,48 @@
       loadSidebar: true,
       subMaxLevel: 1,
       name: 'Haxe 4 中文手册',
-      repo: 'https://ajwyunsx.github.io/HaxeManualCN',
+      repo: 'https://github.com/NulllStack/HaxeManualCN',
       themeColor: '#3f51b5',
-      // 修复加载问题
-      loadNavbar: false,
-      mergeNavbar: true,
-      maxLevel: 4,
-      subMaxLevel: 2
+      // 搜索配置
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        paths: 'auto', // 或者 'auto'
+        placeholder: '搜索文档...',
+        noData: '找不到结果',
+        // 搜索标题的最大层级, 1 - 6
+        depth: 2,
+        hideOtherSidebarContent: false, // 是否隐藏其他侧边栏内容
+        namespace: 'HaxeManualCN', // 避免多站点之间的搜索冲突
+      }
     }
   </script>
-  
   <!-- MDUI JS -->
   <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
   <!-- Docsify JS -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <!-- Docsify 搜索插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-haxe.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-cpp.min.js"></script>
   
   <script>
-    // 增强的动画初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Haxe 4 中文手册已加载');
-      
-      // 为新加载的内容添加动画
-      const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.addedNodes.length > 0) {
-            // 为新添加的段落添加动画
-            const newParagraphs = document.querySelectorAll('.markdown-section p');
-            newParagraphs.forEach((p, index) => {
-              if (!p.style.animation) {
-                p.style.animation = `paragraphFadeIn 0.8s ease-out ${0.5 + index * 0.1}s forwards`;
-              }
-            });
-            
-            // 为新添加的代码块添加动画
-            const newCodeBlocks = document.querySelectorAll('.markdown-section pre');
-            newCodeBlocks.forEach((block, index) => {
-              if (!block.style.animation) {
-                block.style.animation = `codeBlockAppear 0.6s ease-out ${0.3 + index * 0.1}s forwards`;
-              }
-            });
+    // 初始化MDUI组件
+    document.addEventListener('DOMContentLoaded', function() {\      // 初始化搜索功能
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.addEventListener('keyup', function(e) {
+          if (e.key === 'Enter') {
+            const searchTerm = this.value.trim();
+            if (searchTerm) {
+              // 触发docsify搜索
+              const searchEvent = new Event('input', { bubbles: true });
+              this.dispatchEvent(searchEvent);
+            }
           }
-        });
-      });
-      
-      // 观察内容区域的变化
-      const contentArea = document.querySelector('#app');
-      if (contentArea) {
-        observer.observe(contentArea, {
-          childList: true,
-          subtree: true
         });
       }
-      
-      // 添加滚动动画
-      window.addEventListener('scroll', function() {
-        const elements = document.querySelectorAll('.markdown-section');
-        elements.forEach(element => {
-          const elementTop = element.getBoundingClientRect().top;
-          const elementVisible = 150;
-          
-          if (elementTop < window.innerHeight - elementVisible) {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-          }
-        });
-      });
     });
   </script>
 </body>
